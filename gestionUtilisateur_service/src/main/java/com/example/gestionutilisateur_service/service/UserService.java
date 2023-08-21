@@ -1,6 +1,6 @@
 package com.example.gestionutilisateur_service.service;
 
-import com.example.gestionutilisateur_service.dto.User;
+import com.example.gestionutilisateur_service.dto.UserCredentialDTO;
 import com.example.gestionutilisateur_service.dto.UserLogin;
 import com.example.gestionutilisateur_service.entities.UserCredential;
 import com.example.gestionutilisateur_service.enums.Role;
@@ -10,9 +10,9 @@ import java.util.List;
 public interface UserService {
 
 
-    List<User> getTransporteurs(Role role);
+    List<UserCredentialDTO> getTransporteurs(Role role);
 
-    User getUser(Long id);
+    UserCredentialDTO getUser(Long id);
 
     UserCredential addUser(UserCredential userCredential);
 
@@ -23,4 +23,6 @@ public interface UserService {
     List<UserCredential> getAll();
 
     UserCredential login(UserLogin userLogin);
+     UserCredential loadUserByUsername(String username);
+
 }

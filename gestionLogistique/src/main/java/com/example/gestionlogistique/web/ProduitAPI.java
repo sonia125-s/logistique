@@ -1,6 +1,8 @@
 package com.example.gestionlogistique.web;
 
 import com.example.gestionlogistique.dtos.ProduitDTO;
+import com.example.gestionlogistique.entities.Produit;
+import com.example.gestionlogistique.entities.StockeProduit;
 import com.example.gestionlogistique.services.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +15,8 @@ public class ProduitAPI {
     @Autowired
     private ProduitService produitService;
 
-    @GetMapping("logistique/produits")
-    public List<ProduitDTO> getAllProduits(){
+    @GetMapping("/logistiques/produits")
+    public List<StockeProduit> getAllProduits(){
 
         return  produitService.getAllProduits();
     }

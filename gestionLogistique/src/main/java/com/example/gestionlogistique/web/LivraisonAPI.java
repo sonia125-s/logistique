@@ -16,7 +16,7 @@ public class LivraisonAPI {
     @Autowired
     private LivraisonService livraisonService;
 
-    @GetMapping("/logistique/livraisonCommande")
+    @GetMapping("/logistiques/livraisonCommande")
     List<CommandeClientDTO> getCommandePreparation(@RequestParam("etat") EnumEtat etat ,@RequestParam("id") Long id){
         return  livraisonService.listCommandeByEtat(etat,id);
     }

@@ -1,6 +1,6 @@
 package com.example.gestionutilisateur_service.web;
 
-import com.example.gestionutilisateur_service.dto.User;
+import com.example.gestionutilisateur_service.dto.UserCredentialDTO;
 import com.example.gestionutilisateur_service.dto.UserLogin;
 import com.example.gestionutilisateur_service.entities.UserCredential;
 import com.example.gestionutilisateur_service.enums.Role;
@@ -13,22 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
-
 public class UserAPI {
     @Autowired
     private UserService userService;
 
     @GetMapping("/users/providers")
-    public List<User>  listProviders(){
+    public List<UserCredentialDTO>  listProviders(){
        return userService.getTransporteurs(Role.TRANSPORTEUR) ;
     }
     @GetMapping("/users/administrateurs")
-    public List<User>  listAdministrateurs(){
+    public List<UserCredentialDTO>  listAdministrateurs(){
         return userService.getTransporteurs(Role.ADMINISTRATEUR) ;
     }
     @GetMapping("/users/agent_logistique")
-    public List<User>  listAgentLogistique(){
+    public List<UserCredentialDTO>  listAgentLogistique(){
         return userService.getTransporteurs(Role.AGENTLOGISTIQUE) ;
     }
 
@@ -53,7 +51,7 @@ public class UserAPI {
     }
 
     @GetMapping("/users/provides/{id}")
-    public User getProvider(@PathVariable(name="id") long userId){
+    public UserCredentialDTO getProvider(@PathVariable(name="id") long userId){
 
         return userService.getUser(userId);
     }

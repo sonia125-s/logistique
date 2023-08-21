@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name= "TYPE",length=4, discriminatorType = DiscriminatorType.STRING)
 

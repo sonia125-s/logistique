@@ -23,29 +23,29 @@ import java.util.stream.Collectors;
 public class TransportAPI {
     @Autowired
     TransportService transportService;
-    @Autowired
-    TransporteurRestClient transporteurRestClient;
+//    @Autowired
+//    TransporteurRestClient transporteurRestClient;
     @Autowired
     ClientMapper clientMapper;
     @Autowired
     TransportRepository transportRepository;
 
-    @GetMapping("logistique/vehicule")
+    @GetMapping("/logistique/vehicule")
     public List<VehiculeDTO> getAllVehicule() {
         return transportService.getAllVehicule();
     }
 
-    @GetMapping("logistique/transport")
-    public List<TransportDTO> getAllTransport() {
-        List<Transport> transportList = transportRepository.findAll();
-
-        List<Transport> transportList1 = transportList.stream()
-                .map(transport -> {
-                    transport.setTransporteur(transporteurRestClient.findTransporteurById(transport.getTransporteurId()));
-                    return transport;
-                }).collect(Collectors.toList());
-        return transportList1.stream().map(transport -> clientMapper.fromTransport(transport)).collect(Collectors.toList());
-    }
+//    @GetMapping("logistique/transport")
+//    public List<TransportDTO> getAllTransport() {
+//        List<Transport> transportList = transportRepository.findAll();
+//
+//        List<Transport> transportList1 = transportList.stream()
+//                .map(transport -> {
+//                    transport.setTransporteur(transporteurRestClient.findTransporteurById(transport.getTransporteurId()));
+//                    return transport;
+//                }).collect(Collectors.toList());
+//        return transportList1.stream().map(transport -> clientMapper.fromTransport(transport)).collect(Collectors.toList());
+//    }
     @GetMapping("logistique/attributTransportExiste")
     public void attributTransportExiste(@RequestParam("idCommande") Long idCommnade , @RequestParam("idTransport") Long idTransport ){
         transportService.attribuerCommandeTransport(idCommnade,idTransport);
