@@ -75,6 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserCredential loadUserByUsername(String username) {
-        return userRepository.findByEmail(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

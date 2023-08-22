@@ -1,13 +1,18 @@
 package com.example.gestionutilisateur_service.config;
 
+import com.example.gestionutilisateur_service.entities.AppRole;
 import com.example.gestionutilisateur_service.entities.UserCredential;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -20,9 +25,17 @@ public class CustomUserDetails implements UserDetails {
         this.password = userCredential.getPassword();
     }
 
+    private List<AppRole> roles = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities
+                = new ArrayList<>();
+        for (AppRole role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName().name()));
+        }
+
+        return authorities;
     }
 
     @Override

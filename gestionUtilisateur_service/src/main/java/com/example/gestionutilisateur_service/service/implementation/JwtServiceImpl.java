@@ -1,6 +1,8 @@
 package com.example.gestionutilisateur_service.service.implementation;
 
+import com.example.gestionutilisateur_service.entities.UserCredential;
 import com.example.gestionutilisateur_service.service.JwtService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -9,12 +11,18 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Service
 @RequiredArgsConstructor
@@ -27,16 +35,18 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(String userName) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+    public String generateToken(UserCredential userDetails, List<String> roles) {
+        return createToken(userDetails, roles);
     }
 
-    @Override
-    public String createToken(Map<String, Object> claims, String userName) {
+    public String createToken(UserCredential userDetails, List<String> roles) {
+        Map<String, Object> claims = Jwts.claims().setSubject(userDetails.getUsername());
+
+        claims.put("roles", roles);
+        claims.put("id", userDetails.getId());
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();

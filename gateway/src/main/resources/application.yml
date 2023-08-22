@@ -13,6 +13,8 @@ spring:
           uri: http://localhost:8090
           predicates:
             - Path=/users/**
+          filters:
+            - AuthenticationFilter
         - id: logistics
           uri: http://localhost:8091
           predicates:
